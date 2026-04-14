@@ -16,7 +16,7 @@ All code is written in **Python 3** and was developed independently during the p
 ## File Structure
 
 ```
-python_piscine/
+discovery_piscine/
 ├── module0/
 │   ├── ex01/   42.py
 │   └── ex02/   hello_world.py
@@ -42,8 +42,36 @@ python_piscine/
 │   ├── ex03/   float.py
 │   ├── ex04/   round_up.py
 │   └── ex05/   up_low.py
-└── module5/
-    └── ex03/   play_with_arrays.py
+├── module5/
+│   ├── ex00/   create_array.py
+│   ├── ex01/   play_with_arrays.py
+│   ├── ex02/   play_with_arrays.py
+│   ├── ex03/   play_with_arrays.py
+│   └── ex04/   parameters.py
+├── module6/
+│   ├── ex00/   aff_first_param.py
+│   ├── ex01/   upcase_it.py
+│   ├── ex02/   downcase_it.py
+│   ├── ex03/   aff_rev_params.py
+│   └── ex04/   scan_it.py
+├── module7/
+│   ├── ex00/   parameter_matching.py
+│   ├── ex01/   count_it.py
+│   ├── ex02/   string_are_arrays.py
+│   ├── ex03/   append_it.py
+│   └── ex04/   free_range.py
+├── module8/
+│   ├── ex00/   hello_all.py
+│   ├── ex01/   upcase_it.py
+│   ├── ex02/   downcase_all.py
+│   ├── ex03/   greetings_for_all.py
+│   ├── ex04/   methods_everywhere.py
+│   └── ex05/   scope_that.py
+└── module9/
+    ├── ex00/   your_namebook.py
+    ├── ex01/   family_affairs.py
+    ├── ex02/   help_your_professor.py
+    └── ex03/   persons_of_interest.py
 ```
 
 ---
