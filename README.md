@@ -1,0 +1,140 @@
+# rraomeli — Python Piscine
+
+> **42 School** · Python modules · Tsiresy Raomelinary
+
+---
+
+## About
+
+This repository contains all exercises completed by **rraomeli** as part of the 42 Python Piscine.
+Each module introduces a new concept, starting from basic output and progressively covering variables, conditionals, loops, string manipulation, and lists.
+
+All code is written in **Python 3** and was developed independently during the piscine.
+
+---
+
+## File Structure
+
+```
+python_piscine/
+├── module0/
+│   ├── ex01/   42.py
+│   └── ex02/   hello_world.py
+├── module1/
+│   ├── ex00/   name.py
+│   ├── ex01/   name.py
+│   ├── ex02/   age.py
+│   └── ex03/   whatsyourname.py
+├── module2/
+│   ├── ex00/   iszero.py
+│   ├── ex01/   isneg.py
+│   ├── ex02/   password.py
+│   └── ex03/   mult.py
+├── module3/
+│   ├── ex00/   to25.py
+│   ├── ex01/   multiplication_table.py
+│   ├── ex02/   i_got_that.py
+│   └── ex03/   advanced_mult.py
+├── module4/
+│   ├── ex00/   upcase_it.py
+│   ├── ex01/   age.py
+│   ├── ex02/   calculator.py
+│   ├── ex03/   float.py
+│   ├── ex04/   round_up.py
+│   └── ex05/   up_low.py
+└── module5/
+    └── ex03/   play_with_arrays.py
+```
+
+---
+
+## Modules — Description
+
+### Module 0 — First Steps
+
+| Exercise | File | Description |
+|----------|------|-------------|
+| ex01 | `42.py` | Print the number `42` to stdout |
+| ex02 | `hello_world.py` | Classic Hello World program |
+
+### Module 1 — Variables & Strings
+
+| Exercise | File | Description |
+|----------|------|-------------|
+| ex00 | `name.py` | Print full name using f-string formatting |
+| ex01 | `name.py` | Concatenate first + last name into one variable |
+| ex02 | `age.py` | Compute age via integer arithmetic |
+| ex03 | `whatsyourname.py` | Read first & last name from stdin, greet user |
+
+### Module 2 — Conditionals
+
+| Exercise | File | Description |
+|----------|------|-------------|
+| ex00 | `iszero.py` | Check if user-entered number equals zero |
+| ex01 | `isneg.py` | Determine if number is negative, zero, or positive |
+| ex02 | `password.py` | Password validation — access granted or denied |
+| ex03 | `mult.py` | Multiply two numbers, classify result sign |
+
+### Module 3 — Loops
+
+| Exercise | File | Description |
+|----------|------|-------------|
+| ex00 | `to25.py` | Count up to 25 with a while loop |
+| ex01 | `multiplication_table.py` | Print multiplication table using for + range |
+| ex02 | `i_got_that.py` | Loop until user types STOP |
+| ex03 | `advanced_mult.py` | Full 11×11 multiplication table with nested loops |
+
+### Module 4 — Strings & Numbers
+
+| Exercise | File | Description |
+|----------|------|-------------|
+| ex00 | `upcase_it.py` | Convert a word to uppercase using `.upper()` |
+| ex01 | `age.py` | Project age in 10, 20, and 30 years |
+| ex02 | `calculator.py` | 4-operation calculator (+, -, /, *) |
+| ex03 | `float.py` | Detect if a number is integer or decimal |
+| ex04 | `round_up.py` | Round float up using `math.ceil()` |
+| ex05 | `up_low.py` | Invert case of each character in a word |
+
+### Module 5 — Lists & Sets
+
+| Exercise | File | Description |
+|----------|------|-------------|
+| ex03 | `play_with_arrays.py` | Set comprehension — filter and transform an array |
+
+---
+
+## Skills Covered
+
+| Concept | Details |
+|---------|---------|
+| Output | `print()`, f-strings, string concatenation |
+| Variables | `str`, `int`, `float`, arithmetic operations |
+| User Input | `input()`, type casting with `int()` / `float()` |
+| Conditionals | `if` / `elif` / `else`, comparison operators |
+| Loops | `while`, `for` / `range`, `break`, nested loops |
+| Functions | `def`, `return`, parameters |
+| String methods | `.upper()`, `.lower()`, `.isupper()`, `.islower()` |
+| Collections | Lists, sets, set comprehensions |
+| Standard library | `import math`, `math.ceil()` |
+
+---
+
+## How to Run
+
+**Requirement:** Python 3.x — no external dependencies.
+
+```bash
+# Run any exercise
+python3 module0/ex01/42.py
+
+# Exercises with input() will prompt interactively
+python3 module4/ex05/up_low.py
+```
+
+---
+
+## Author
+
+| Login | Name |
+|-------|------|
+| rraomeli | Tsiresy Raomelinary |
