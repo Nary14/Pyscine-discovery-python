@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>rraomeli — Python Modules</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --border: #1e1e2e;
+    --accent: #00e5ff;
+    --accent2: #7c3aed;
+    --gold: #f59e0b;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --green: #22c55e;
+    --red: #ef4444;
+    --card: #13131c;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    padding: 80px 40px 60px;
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 80% -10%, rgba(0,229,255,0.06) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 0% 100%, rgba(124,58,237,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,229,255,0.08);
+    border: 1px solid rgba(0,229,255,0.2);
+    color: var(--accent);
+    padding: 4px 14px;
+    border-radius: 2px;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+
+  .badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
+
+  .hero-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+    margin-bottom: 20px;
+  }
+
+  .hero-title .login {
+    color: var(--accent);
+    display: block;
+  }
+
+  .hero-title .label {
+    color: var(--muted);
+    font-size: 0.35em;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 32px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .meta-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .meta-value {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .meta-value.accent { color: var(--accent); }
+  .meta-value.gold { color: var(--gold); }
+
+  /* CONTENT */
+  .content {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 60px 40px;
+  }
+
+  /* SECTION HEADER */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    margin-top: 56px;
+  }
+
+  .section-header:first-child { margin-top: 0; }
+
+  .section-num {
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    opacity: 0.6;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border), transparent);
+  }
+
+  /* MODULE CARDS */
+  .modules-grid {
+    display: grid;
+    gap: 16px;
+  }
+
+  .module-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent2);
+    padding: 24px 28px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .module-card:hover {
+    border-left-color: var(--accent);
+    background: #16161f;
+  }
+
+  .module-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .module-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .module-count {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  .exercises {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 10px;
+  }
+
+  .exercise {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--border);
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .ex-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .ex-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .ex-tag {
+    font-size: 10px;
+    background: rgba(124,58,237,0.15);
+    color: #a78bfa;
+    border: 1px solid rgba(124,58,237,0.2);
+    padding: 1px 8px;
+    letter-spacing: 0.05em;
+  }
+
+  .ex-file {
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .ex-desc {
+    font-size: 11px;
+    color: #94a3b8;
+    line-height: 1.5;
+  }
+
+  /* CODE BLOCKS */
+  .code-block {
+    background: #0d0d16;
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--accent2);
+    padding: 20px 24px;
+    margin: 16px 0;
+    overflow-x: auto;
+  }
+
+  .code-block .comment { color: var(--muted); }
+  .code-block .keyword { color: #c084fc; }
+  .code-block .string { color: #86efac; }
+  .code-block .func { color: var(--accent); }
+  .code-block .output { color: var(--gold); }
+
+  /* SKILLS TABLE */
+  .skills-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+  }
+
+  .skills-table th {
+    text-align: left;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .skills-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(30,30,46,0.5);
+    font-size: 13px;
+    vertical-align: top;
+  }
+
+  .skills-table tr:hover td {
+    background: rgba(255,255,255,0.02);
+  }
+
+  .skill-name {
+    color: var(--accent);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .pill {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 2px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  .pill.learned { background: rgba(34,197,94,0.1); color: var(--green); border: 1px solid rgba(34,197,94,0.2); }
+  .pill.practiced { background: rgba(0,229,255,0.08); color: var(--accent); border: 1px solid rgba(0,229,255,0.15); }
+
+  /* STATS ROW */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-bottom: 40px;
+  }
+
+  .stat-box {
+    background: var(--card);
+    padding: 24px 20px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--accent);
+    display: block;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-login {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--accent);
+  }
+
+  .footer-right {
+    font-size: 11px;
+    color: var(--muted);
+    text-align: right;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    background: var(--border);
+    height: 4px;
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 8px;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent2), var(--accent));
+    border-radius: 2px;
+  }
+
+  .inline-accent { color: var(--accent); }
+  .inline-gold { color: var(--gold); }
+  .inline-purple { color: #a78bfa; }
+
+  p { color: #94a3b8; margin: 8px 0; }
+
+  .note-box {
+    background: rgba(245,158,11,0.05);
+    border: 1px solid rgba(245,158,11,0.15);
+    border-left: 3px solid var(--gold);
+    padding: 14px 18px;
+    margin: 20px 0;
+    font-size: 13px;
+    color: #cbd5e1;
+  }
+
+  .note-box strong { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid"></div>
+  <div class="badge">42 School — Python Piscine</div>
+  <h1 class="hero-title">
+    <span class="label">login</span>
+    <span class="login">rraomeli</span>
+  </h1>
+  <div class="hero-meta">
+    <div class="meta-item">
+      <span class="meta-label">Full name</span>
+      <span class="meta-value">Tsiresy Raomelinary</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Language</span>
+      <span class="meta-value accent">Python 3</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Modules</span>
+      <span class="meta-value gold">6</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Exercises</span>
+      <span class="meta-value">20</span>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="content">
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-box">
+      <span class="stat-num">6</span>
+      <span class="stat-label">Modules</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num">20</span>
+      <span class="stat-label">Exercises</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num">5</span>
+      <span class="stat-label">Concepts</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num">~200</span>
+      <span class="stat-label">Lines of code</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title">About</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <p>
+    This repository contains all exercises completed by <span class="inline-accent">rraomeli</span> as part of the
+    <span class="inline-gold">42 Python Piscine</span>. Each module introduces a new concept, starting from basic
+    output and progressively covering variables, conditionals, loops, string manipulation, and lists.
+  </p>
+  <p>
+    All code is written in <span class="inline-purple">Python 3</span>, respects the 42 norm, and was developed independently during the piscine.
+  </p>
+
+  <!-- MODULES -->
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Module Structure</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="modules-grid">
+
+    <!-- MODULE 0 -->
+    <div class="module-card">
+      <div class="module-header">
+        <span class="module-name">Module 0 — First Steps</span>
+        <span class="module-count">2 exercises</span>
+      </div>
+      <div class="exercises">
+        <div class="exercise">
+          <div class="ex-header">
+            <span class="ex-name">ex00</span>
+            <span class="ex-tag">empty</span>
+          </div>
+          <span class="ex-file">—</span>
+          <span class="ex-desc">Reserved placeholder</span>
+        </div>
+        <div class="exercise">
+          <div class="ex-header">
+            <span class="ex-name">ex01</span>
+            <span class="ex-tag">print</span>
+          </div>
+          <span class="ex-file">42.py</span>
+          <span class="ex-desc">Print the number 42 to stdout</span>
+        </div>
+        <div class="exercise">
+          <div class="ex-header">
+            <span class="ex-name">ex02</span>
+            <span class="ex-tag">print</span>
+          </div>
+          <span class="ex-file">hello_world.py</span>
+          <span class="ex-desc">Classic Hello World program</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODULE 1 -->
+    <div class="module-card">
+      <div class="module-header">
+        <span class="module-name">Module 1 — Variables & Strings</span>
+        <span class="module-count">4 exercises</span>
+      </div>
+      <div class="exercises">
+        <div class="exercise">
+          <div class="ex-header">
+            <span class="ex-name">ex00</span>
+            <span class="ex-tag">f-string</span>
+          </div>
+          <span class="ex-file">name.py</span>
+          <span class="ex-desc">Print full name using f-string formatting</span>
+        </div>
+        <div class="exercise">
+          <div class="ex-header">
+            <span class="ex-name">ex01</span>
+            <span class="ex-tag">concat</span>
+          </div>
+          <span class="ex-file">name.py</span>
+          <span class="ex-desc">Concatenate first + last name into one variable</span>
+        </div>
+        <div class="exercise">
+          <div class="ex-header">
+            <span class="ex-name">ex02</span>
+            <span class="ex-tag">arithmetic</span>
+          </div>
+          <span class="ex-file">age.py</span>
+          <span class="ex-desc">Compute age via integer arithmetic</span>
+        </div>
+        <div class="exercise">
+          <div class="ex-header">
+            <span class="ex-name">ex03</span>
+            <span class="ex-tag">input</span>
+          </div>
+          <span class="ex-file">whatsyourname.py</span>
+          <span class="ex-desc">Read first & last name from stdin, greet user</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODULE 2 -->
+    <div class="module-card">
+      <div class="module-header">
+        <span class="module-name">Module 2 — Conditionals</span>
+        <span class="module-count">4 exercises</span>
+      </div>
+      <div class="exercises">
+        <div class="exercise">
+          <div class="ex-header">
+            <span class="ex-name">ex00</span>
+            <span class="ex-tag">if/else</span>
+          </div>
+          <span class="ex-file">iszero.py</span>
+          <span class="ex-desc">Check if user-entered number equals zero</span>
+        </div>
+        <div class="exercise">
+          <div class="ex-header">
+            <span class="ex-name">ex01</span>
+            <span class="ex-tag">elif</span>
+          </div>
+          <span class="ex-file">isneg.py</span>
+          <span class="ex-desc">Determine if number is negative, zero, or positive</span>
+        </div>
+        <div class="exercise">
+          <div class="ex-header">
+            <span class="ex-name">ex02</span>
+            <span class="ex-tag">comparison</span>
+          </div>
+          <span class="ex-file">password.py</span>
+          <span class="ex-desc">Password validation — access granted or denied</span>
+        </div>
+        <div class="exercise">
+          <div class="ex-header">
+            <span class="ex-name">ex03</span>
+            <span class="ex-tag">function</span>
+          </div>
+          <span class="ex-file">mult.py</span>
+          <span class="ex-desc">Multiply two numbers, classify result sign</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODULE 3 -->
+    <div class="module-card">
+      <div class="module-header">
+        <span class="module-name">Module 3 — Loops</span>
+        <span class="module-count">4 exercises</span>
+      </div>
+      <div class="exercises">
+        <div class="exercise">
+          <div class="ex-header">
+            <span class="ex-name">ex00</span>
+            <span class="ex-tag">while</span>
+          </div>
+          <span class="ex-file">to25.py</span>
+          <span class="ex-desc">Count up to 25 with a while loop</span>
+        </div>
+        <div class="exercise">
+          <div class="ex-header">
+            <span class="ex-name">ex01</span>
+            <span class="ex-tag">for</span>
+          </div>
+          <span class="ex-file">multiplication_table.py</span>
+          <span class="ex-desc">Print multiplication table using for + range</span>
+        </div>
+        <div class="exercise">
+          <div class="ex-header">
+            <span class="ex-name">ex02</span>
+            <span class="ex-tag">break</span>
+          </div>
+          <span class="ex-file">i_got_that.py</span>
+          <span class="ex-desc">Loop until user types STOP</span>
+        </div>
+        <div class="exercise">
+          <div class="ex-header">
+            <span class="ex-name">ex03</span>
+            <span class="ex-tag">nested</span>
+          </div>
+          <span class="ex-file">advanced_mult.py</span>
+          <span class="ex-desc">Full 11×11 multiplication table with nested loops</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODULE 4 -->
+    <div class="module-card">
+      <div class="module-header">
+        <span class="module-name">Module 4 — Strings & Numbers</span>
+        <span class="module-count">6 exercises</span>
+      </div>
+      <div class="exercises">
+        <div class="exercise">
+          <div class="ex-header">
+            <span class="ex-name">ex00</span>
+            <span class="ex-tag">str</span>
+          </div>
+          <span class="ex-file">upcase_it.py</span>
+          <span class="ex-desc">Convert word to uppercase using .upper()</span>
+        </div>
+        <div class="exercise">
+          <div class="ex-header">
+            <span class="ex-name">ex01</span>
+            <span class="ex-tag">arithmetic</span>
+          </div>
+          <span class="ex-file">age.py</span>
+          <span class="ex-desc">Project age in 10, 20, 30 years</span>
+        </div>
+        <div class="exercise">
+          <div class="ex-header">
+            <span class="ex-name">ex02</span>
+            <span class="ex-tag">operators</span>
+          </div>
+          <span class="ex-file">calculator.py</span>
+          <span class="ex-desc">4-operation calculator (+, -, /, *)</span>
+        </div>
+        <div class="exercise">
+          <div class="ex-header">
+            <span class="ex-name">ex03</span>
+            <span class="ex-tag">float</span>
+          </div>
+          <span class="ex-file">float.py</span>
+          <span class="ex-desc">Detect if number is integer or decimal</span>
+        </div>
+        <div class="exercise">
+          <div class="ex-header">
+            <span class="ex-name">ex04</span>
+            <span class="ex-tag">math</span>
+          </div>
+          <span class="ex-file">round_up.py</span>
+          <span class="ex-desc">Round float up using math.ceil()</span>
+        </div>
+        <div class="exercise">
+          <div class="ex-header">
+            <span class="ex-name">ex05</span>
+            <span class="ex-tag">loop+str</span>
+          </div>
+          <span class="ex-file">up_low.py</span>
+          <span class="ex-desc">Invert case of each character in a word</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODULE 5 -->
+    <div class="module-card">
+      <div class="module-header">
+        <span class="module-name">Module 5 — Lists & Sets</span>
+        <span class="module-count">1 exercise</span>
+      </div>
+      <div class="exercises">
+        <div class="exercise">
+          <div class="ex-header">
+            <span class="ex-name">ex01</span>
+            <span class="ex-tag">empty</span>
+          </div>
+          <span class="ex-file">—</span>
+          <span class="ex-desc">Placeholder</span>
+        </div>
+        <div class="exercise">
+          <div class="ex-header">
+            <span class="ex-name">ex03</span>
+            <span class="ex-tag">set comp</span>
+          </div>
+          <span class="ex-file">play_with_arrays.py</span>
+          <span class="ex-desc">Set comprehension — filter & transform an array</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /modules-grid -->
+
+  <!-- SKILLS LEARNED -->
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Skills Covered</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <table class="skills-table">
+    <thead>
+      <tr>
+        <th>Concept</th>
+        <th>Details</th>
+        <th>Status</th>
+        <th>Progress</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="skill-name">Output</span></td>
+        <td>print(), f-strings, string concatenation</td>
+        <td><span class="pill learned">Learned</span></td>
+        <td><div class="progress-wrap"><div class="progress-fill" style="width:100%"></div></div></td>
+      </tr>
+      <tr>
+        <td><span class="skill-name">Variables</span></td>
+        <td>str, int, float, arithmetic operations</td>
+        <td><span class="pill learned">Learned</span></td>
+        <td><div class="progress-wrap"><div class="progress-fill" style="width:100%"></div></div></td>
+      </tr>
+      <tr>
+        <td><span class="skill-name">User Input</span></td>
+        <td>input(), type casting with int() / float()</td>
+        <td><span class="pill learned">Learned</span></td>
+        <td><div class="progress-wrap"><div class="progress-fill" style="width:100%"></div></div></td>
+      </tr>
+      <tr>
+        <td><span class="skill-name">Conditionals</span></td>
+        <td>if / elif / else, comparison operators</td>
+        <td><span class="pill learned">Learned</span></td>
+        <td><div class="progress-wrap"><div class="progress-fill" style="width:100%"></div></div></td>
+      </tr>
+      <tr>
+        <td><span class="skill-name">Loops</span></td>
+        <td>while, for / range, break, nested loops</td>
+        <td><span class="pill learned">Learned</span></td>
+        <td><div class="progress-wrap"><div class="progress-fill" style="width:100%"></div></div></td>
+      </tr>
+      <tr>
+        <td><span class="skill-name">Functions</span></td>
+        <td>def, return, parameters</td>
+        <td><span class="pill practiced">Practiced</span></td>
+        <td><div class="progress-wrap"><div class="progress-fill" style="width:60%"></div></div></td>
+      </tr>
+      <tr>
+        <td><span class="skill-name">String methods</span></td>
+        <td>.upper(), .lower(), .isupper(), .islower()</td>
+        <td><span class="pill learned">Learned</span></td>
+        <td><div class="progress-wrap"><div class="progress-fill" style="width:90%"></div></div></td>
+      </tr>
+      <tr>
+        <td><span class="skill-name">Collections</span></td>
+        <td>Lists, sets, set comprehensions</td>
+        <td><span class="pill practiced">Practiced</span></td>
+        <td><div class="progress-wrap"><div class="progress-fill" style="width:50%"></div></div></td>
+      </tr>
+      <tr>
+        <td><span class="skill-name">Standard library</span></td>
+        <td>import math, math.ceil()</td>
+        <td><span class="pill practiced">Practiced</span></td>
+        <td><div class="progress-wrap"><div class="progress-fill" style="width:40%"></div></div></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- EXAMPLE CODE -->
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Code Samples</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <p>Module 4 — ex05 · Invert case of each character</p>
+  <div class="code-block">
+    <pre><span class="comment">#!/usr/bin/env python3</span>
+
+<span class="keyword">word</span> = <span class="func">input</span>(<span class="string">"Enter a word! :"</span>)
+res = <span class="string">""</span>
+<span class="keyword">for</span> i <span class="keyword">in</span> word:
+    <span class="keyword">if</span> i.<span class="func">isupper</span>():
+        res += i.<span class="func">lower</span>()
+    <span class="keyword">elif</span> i.<span class="func">islower</span>():
+        res += i.<span class="func">upper</span>()
+    <span class="keyword">else</span>:
+        res += i
+<span class="func">print</span>(res)
+
+<span class="comment"># Input:  "Hello42"</span>
+<span class="output"># Output: hELLO42</span></pre>
+  </div>
+
+  <p>Module 5 — ex03 · Set comprehension</p>
+  <div class="code-block">
+    <pre><span class="comment">#!/usr/bin/env python3</span>
+
+Original_array = [<span class="output">2, 8, 9, 48, 8, 22, -12, 2</span>]
+<span class="func">print</span>(<span class="string">"Original array: "</span>, Original_array)
+
+new_array = {x + <span class="output">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> Original_array <span class="keyword">if</span> x > <span class="output">5</span>}
+<span class="func">print</span>(<span class="string">"New array: "</span>, new_array)
+
+<span class="comment"># Original array: [2, 8, 9, 48, 8, 22, -12, 2]</span>
+<span class="output"># New array: {10, 11, 50, 24}</span></pre>
+  </div>
+
+  <!-- RUN -->
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2 class="section-title">How to Run</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="note-box">
+    <strong>Requirement:</strong> Python 3.x must be installed. No external dependencies needed.
+  </div>
+
+  <div class="code-block">
+    <pre><span class="comment"># Clone or extract the project</span>
+cd module0/ex01
+python3 42.py
+
+<span class="comment"># Run any exercise the same way</span>
+cd module4/ex05
+python3 up_low.py
+
+<span class="comment"># Exercises with input() will prompt you interactively</span></pre>
+  </div>
+
+</div><!-- /content -->
+
+<footer>
+  <div>
+    <div class="footer-login">rraomeli</div>
+    <div style="font-size:11px; color:var(--muted); margin-top:4px;">Tsiresy Raomelinary — 42 Python Piscine</div>
+  </div>
+  <div class="footer-right">
+    <div style="color:var(--accent); font-weight:600; margin-bottom:4px;">6 modules · 20 exercises · Python 3</div>
+    <div>Generated for 42 School curriculum</div>
+  </div>
+</footer>
+
+</body>
+</html>
